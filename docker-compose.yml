@@ -14,3 +14,20 @@ services:
     volumes:
       - ./src:/app/src
       - ./test:/app/test
+
+  postgres:
+    image: postgres:14.0-alpine3.14
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PORT=${DB_PORT}
+    ports:
+      - '${DB_OUT_PORT}:${DB_PORT}'
+
+volumes:
+  db-data:

@@ -76,7 +76,8 @@ This section explains the purpose of defined environment variables and what they
 - `APP_DEBUG_OUT_PORT`: Debug port that is open for the outside world, this port is used for debug configuration for devs IDEs.
 - `DB_TYPE`: Type of database driver that is being used for the application. Usually we will use `postgres` as db, but the possible ones are `mysql`, `postgres`, `sqlite` and `mssql`.
 - `DB_HOST`: Host, IP or domain name of your database.
-- `DB_PORT`: Port of your database connection.
+- `DB_PORT`: Database port that is open inside docker container.
+- `DB_OUT_PORT`: Database port that is open for the outside world, that is accessible publicly.
 - `DB_USER`: Database user that will have access to database in name of app.
 - `DB_PASSWORD`: Password for the database user.
 - `DB_NAME`: Database name for this app.
