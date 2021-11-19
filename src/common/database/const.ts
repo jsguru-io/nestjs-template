@@ -1,0 +1,2 @@
+export const SEQUELIZE_TOKEN = 'SEQUELIZE_TOKEN';
+export const MIGRATOR_TOKEN = 'MIGRATOR_TOKEN';
