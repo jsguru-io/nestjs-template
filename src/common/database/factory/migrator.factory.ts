@@ -8,12 +8,7 @@ export const migratorFactory = async (
 ): Promise<Migrator> => {
   return new Umzug({
     migrations: {
-      glob: [
-        '**/migrations/*.migration.{ts,js}',
-        {
-          cwd: __dirname,
-        },
-      ],
+      glob: '**/migrations/*.migration.ts',
     },
     context: sequelize.getQueryInterface(),
     storage: new SequelizeStorage({

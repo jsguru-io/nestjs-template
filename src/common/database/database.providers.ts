@@ -2,6 +2,7 @@ import { Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MIGRATOR_TOKEN, SEQUELIZE_TOKEN } from './const';
 import { sequelizeFactory, migratorFactory } from './factory';
+import { MigratorCommand } from './command';
 
 export const databaseProviders: Provider[] = [
   {
@@ -14,4 +15,5 @@ export const databaseProviders: Provider[] = [
     useFactory: migratorFactory,
     inject: [SEQUELIZE_TOKEN],
   },
+  MigratorCommand,
 ];
