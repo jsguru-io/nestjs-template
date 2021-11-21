@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { MIGRATOR_TOKEN } from '../const';
 import { Command, Positional } from 'nestjs-command';
-import { IMigrator } from '../factory';
+import { IMigrator } from '../type';
 
 @Injectable()
 export class MigratorCommand {
