@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { MIGRATOR_TOKEN } from '../const';
 import { Command, Positional } from 'nestjs-command';
-import { Umzug } from 'umzug';
+import { IMigrator } from '../factory';
 
 @Injectable()
 export class MigratorCommand {
-  constructor(@Inject(MIGRATOR_TOKEN) private readonly migrator: Umzug) {}
+  constructor(@Inject(MIGRATOR_TOKEN) private readonly migrator: IMigrator) {}
 
   @Command({
     command: 'migrate',
@@ -36,10 +36,7 @@ export class MigratorCommand {
     migration: string,
   ): Promise<void> {
     await this.migrator.create({
-      name: `${migration}.migration.ts`,
-      folder: `${__dirname}/../migrations`,
-      prefix: 'TIMESTAMP',
-      allowConfusingOrdering: true,
+      name: migration,
     });
   }
 }
