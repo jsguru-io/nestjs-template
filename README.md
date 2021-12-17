@@ -74,7 +74,6 @@ This section explains the purpose of defined environment variables and what they
 - `APP_OUT_PORT`: Port that is open for the outside world, that is accessible publicly.
 - `APP_DEBUG_PORT`: Debug port that is open inside docker container, the inner port
 - `APP_DEBUG_OUT_PORT`: Debug port that is open for the outside world, this port is used for debug configuration for devs IDEs.
-- `DB_TYPE`: Type of database driver that is being used for the application. Usually we will use `postgres` as db, but the possible ones are `mysql`, `postgres`, `sqlite` and `mssql`.
 - `DB_HOST`: Host, IP or domain name of your database.
 - `DB_PORT`: Database port that is open inside docker container.
 - `DB_OUT_PORT`: Database port that is open for the outside world, that is accessible publicly.
@@ -82,8 +81,29 @@ This section explains the purpose of defined environment variables and what they
 - `DB_PASSWORD`: Password for the database user.
 - `DB_NAME`: Database name for this app.
 
-### Code linting
+### CLI Commands
+This project introduces the usage of custom CLI commands with the help of [nestjs-command](https://www.npmjs.com/package/nestjs-command) library.
+Register commands as described in the link, and you can execute it with `yarn command <COMMAND_NAME>`.
 
+### Database and migrations
+In order to version and synchronize database schemas throughout different environments we are using database migrations mechanism.
+
+We are using [Umzug](https://github.com/sequelize/umzug) library behind database migrations functionalities.
+
+If you want to create new migration (you'll probably need to perform that inside docker container), do it like:
+```bash
+$ docker-compose exec api sh -c "yarn db:migration:create <MIGRATION_NAME>"
+```
+If you want to execute migrations and update the database schema, do it like:
+```bash
+$ docker-compose exec api sh -c "yarn db:migrate"
+```
+If you want to revert executed migrations, do it like:
+```bash
+$ docker-compose exec api sh -c "yarn db:migrate:down"
+```
+
+### Code linting
 We use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) to make our code more readable and unified.
 
 `prettier` should be already running in the background while you code,
@@ -106,7 +126,6 @@ TODO...
 
 ## Todos
 - Add `example` module that will serve as placeholder module for this project
-- Add database configuration, add `sequelize-ts` package and implement typescript migrations mechanism;
 - Add global validation pipe with usage of `class-validator`
 - Enable global errors handling, decide the format of thrown errors/exceptions
 - Add Docker configuration for production build

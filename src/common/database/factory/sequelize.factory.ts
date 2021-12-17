@@ -11,7 +11,7 @@ export const sequelizeFactory = async (
     username: configService.get<string>('DB_USER'),
     password: configService.get<string>('DB_PASSWORD'),
     database: configService.get<string>('DB_NAME'),
-    models: [`${__dirname}/../../**/*.model.{ts,js}`],
+    models: [`${__dirname}/../../../**/*.model.{ts,js}`],
     modelMatch: (filename: string, member) => {
       const exportedMember: string = filename.substring(
         0,
