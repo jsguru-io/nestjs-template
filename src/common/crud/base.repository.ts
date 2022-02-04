@@ -1,17 +1,39 @@
 import { Model } from 'sequelize-typescript';
-import { FindOptions, UpdateOptions } from 'sequelize';
+import { FindOptions, FindAndCountOptions, UpdateOptions } from 'sequelize';
 import {
   ModelAttributes,
   ModelCreationAttributes,
   ModelPayload,
   ModelType,
+  PaginationParams,
+  ResultsWithCountSet,
 } from './type';
 
 export abstract class BaseRepository<T extends Model<T>> {
+  defaultLimit = 10;
+  defaultOffset = 0;
+
   protected constructor(protected readonly model: ModelType<T>) {}
 
   async findAll(options?: FindOptions<T>): Promise<T[]> {
     return this.model.findAll(options);
+  }
+
+  async findAndCountAll(
+    options?: FindAndCountOptions<ModelCreationAttributes<T>>,
+  ): Promise<ResultsWithCountSet<T>> {
+    return this.model.findAndCountAll(options);
+  }
+
+  async findPaginated(
+    paginationParams: PaginationParams,
+    options?: FindAndCountOptions<ModelCreationAttributes<T>>,
+  ): Promise<ResultsWithCountSet<T>> {
+    return this.findAndCountAll({
+      ...options,
+      offset: paginationParams.offset ?? this.defaultOffset,
+      limit: paginationParams.limit ?? this.defaultLimit,
+    });
   }
 
   async findOneById(id: string): Promise<T> {
