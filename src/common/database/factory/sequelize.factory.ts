@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
+import * as _ from 'lodash';
 
 export const sequelizeFactory = async (
   configService: ConfigService,
@@ -17,7 +18,9 @@ export const sequelizeFactory = async (
         0,
         filename.indexOf('.model'),
       );
-      return exportedMember === member.toLowerCase();
+      const convertedMember: string = _.camelCase(exportedMember);
+
+      return convertedMember.toLocaleLowerCase() === member.toLowerCase();
     },
   });
 };

@@ -10,10 +10,15 @@ import {
 } from './type';
 
 export abstract class BaseRepository<T extends Model<T>> {
+  maxLimit = 100;
   defaultLimit = 10;
   defaultOffset = 0;
 
   protected constructor(protected readonly model: ModelType<T>) {}
+
+  protected resolveLimit(limit: number = this.defaultLimit): number {
+    return limit > this.maxLimit ? this.maxLimit : limit;
+  }
 
   async findAll(options?: FindOptions<T>): Promise<T[]> {
     return this.model.findAll(options);
@@ -32,7 +37,7 @@ export abstract class BaseRepository<T extends Model<T>> {
     return this.findAndCountAll({
       ...options,
       offset: paginationParams.offset ?? this.defaultOffset,
-      limit: paginationParams.limit ?? this.defaultLimit,
+      limit: this.resolveLimit(paginationParams.limit),
     });
   }
 
@@ -48,7 +53,7 @@ export abstract class BaseRepository<T extends Model<T>> {
     return this.model.create(<ModelCreationAttributes<T>>payload);
   }
 
-  async createMany(payload: ModelPayload<T>[]) {
+  async createMany(payload: ModelPayload<T>[]): Promise<T[]> {
     return this.model.bulkCreate(<ModelCreationAttributes<T>[]>payload);
   }
 

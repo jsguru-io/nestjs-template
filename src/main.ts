@@ -6,6 +6,8 @@ import { ConfigService } from '@nestjs/config';
 const bootstrap = async () => {
   const app: INestApplication = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('v1');
+
   const config: ConfigService = app.get(ConfigService);
   const port: number = +config.get<number>('APP_PORT');
   await app.listen(port);
