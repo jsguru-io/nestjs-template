@@ -12,7 +12,7 @@ import {
 import { PaginatedSet } from 'src/common/crud';
 import { QueryParamsDTO } from 'src/common/http/query-params.dto';
 import { ExampleDTO } from './dto/example.dto';
-import { Example } from './example.model';
+import { Example } from './model/example.model';
 import { ExampleService } from './example.service';
 
 @Controller('examples')
