@@ -1,8 +1,8 @@
 {
   "name": "nestjs-template",
   "version": "1.0.1",
-  "description": "",
-  "author": "",
+  "description": "NestJS template used for rapid BackEnd apps development",
+  "author": "JSGuru",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -35,6 +35,7 @@
     "class-validator": "^0.13.2",
     "lodash": "^4.17.21",
     "nestjs-command": "^3.1.0",
+    "node-fetch": "2.6.7",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
