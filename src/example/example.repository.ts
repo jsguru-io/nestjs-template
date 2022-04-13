@@ -1,4 +1,4 @@
-import { BaseRepository } from 'src/common/crud';
+import { BaseRepository } from '../common/crud';
 import { Example } from './model/example.model';
 
 export class ExampleRepository extends BaseRepository<Example> {

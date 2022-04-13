@@ -6,7 +6,7 @@ services:
       - .env
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     command: 'yarn run start:dev --debug 0.0.0.0:${APP_DEBUG_PORT}'
     ports:
       - '${APP_OUT_PORT}:${APP_PORT}'
