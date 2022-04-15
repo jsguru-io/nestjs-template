@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  api-test:
+    env_file:
+      - .env.test
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: 'sh -c "sleep 5s && yarn db:migrate && yarn test:e2e"'
+    depends_on:
+      - postgres-test
+
+  postgres-test:
+    image: postgres:14.0-alpine3.14
+    env_file:
+      - .env.test
+    volumes:
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PORT=${DB_PORT}
+    ports:
+      - '${DB_OUT_PORT}:${DB_PORT}'

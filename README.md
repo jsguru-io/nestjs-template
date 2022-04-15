@@ -122,14 +122,29 @@ And whatever errors or warnings come out as a result, we have to address them.
 
 ## Testing
 
-TODO...
+### Unit testing
+TODO
+
+### e2e / API testing
+The idea of e2e/API testing is to test your resources and endpoints against some test data and payloads, and you should aim to cover most crucial scenarios
+that can occur in your endpoints (`20x` and `40x`) statuses.
+
+In order to perform API testing against your HTTP endpoints you can do it in two ways:
+- You can run:
+    ```shell
+      $ docker-compose exec api sh -c "yarn test:e2e"
+    ```
+  But bear in mind that this command will run tests again your <b>main project database</b>, so this is not recommended way to do it.
+
+- The second, recommended, way is to perform tests in new container with new database, with the command:
+    ```shell
+      $ docker-compose -f docker-compose.test.yml up
+    ```
+    and this automatically create new containers for app and database in test mode, run the e2e tests in isolated env and database, and it will close and tear down at the end.
+
 
 ## Todos
-- Add `example` module that will serve as placeholder module for this project
-- Add global validation pipe with usage of `class-validator`
 - Enable global errors handling, decide the format of thrown errors/exceptions
-- Add Docker configuration for production build
-- Add documentation and explanation for testing
 
 ## Relevant links
 - [JSGuru](https://jsguru.io/)
