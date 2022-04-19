@@ -9,10 +9,10 @@ import {
 } from './type';
 
 export abstract class BaseCrudService<
-  M extends Model,
-  T extends BaseRepository<M>,
+  M extends Model = Model,
+  T extends BaseRepository<M> = BaseRepository<M>,
 > {
-  protected constructor(protected readonly repository: T) {}
+  protected constructor(public readonly repository: T) {}
 
   async findAll(options?: FindOptions<M>): Promise<PaginatedSet<M[]>> {
     const results: M[] = await this.repository.findAll(options);
