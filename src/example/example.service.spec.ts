@@ -4,7 +4,7 @@ import { ExampleRepository } from './example.repository';
 import { Example } from './model/example.model';
 import { DatabaseModule, MODEL_FACTORY_TOKEN } from '../common/database';
 import { ModelFactory } from '../common/database/factory/model.factory';
-import { PaginatedSet } from '../common/crud';
+import { ModelCreationAttributes, PaginatedSet } from '../common/crud';
 
 describe('ExampleService', () => {
   let service: ExampleService;
@@ -154,5 +154,55 @@ describe('ExampleService', () => {
       age: 23,
       isActive: false,
     });
+  });
+
+  it('ExampleService.create() should return model', async () => {
+    const payload: ModelCreationAttributes<Example> = {
+      name: 'Example Name',
+      age: 23,
+      isActive: false,
+    };
+    const example: Example = modelFactory.create<Example>(Example, payload);
+
+    jest.spyOn(repository, 'create').mockImplementation(async () => example);
+
+    const result: Example = await service.create(payload);
+
+    expect(result).toBeInstanceOf(Example);
+    expect(result).toMatchObject({
+      id: expect.any(String),
+      name: 'Example Name',
+      age: 23,
+      isActive: false,
+    });
+  });
+
+  it('ExampleService.update() should return model', async () => {
+    const payload: ModelCreationAttributes<Example> = {
+      name: 'Example Name',
+      age: 23,
+      isActive: false,
+    };
+    const example: Example = modelFactory.create<Example>(Example, payload);
+
+    jest.spyOn(repository, 'update').mockImplementation(async () => example);
+
+    const result: Example = await service.update('exampleId', payload);
+
+    expect(result).toBeInstanceOf(Example);
+    expect(result).toMatchObject({
+      id: expect.any(String),
+      name: 'Example Name',
+      age: 23,
+      isActive: false,
+    });
+  });
+
+  it('ExampleService.remove() should return undefined', async () => {
+    jest.spyOn(repository, 'remove').mockImplementation(async () => undefined);
+
+    const result = await service.remove('exampleId');
+
+    expect(result).toBeUndefined();
   });
 });
