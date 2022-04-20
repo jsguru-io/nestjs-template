@@ -123,7 +123,20 @@ And whatever errors or warnings come out as a result, we have to address them.
 ## Testing
 
 ### Unit testing
-TODO
+The idea of unit testing is to test your units (classes, methods, functions, etc.) in isolated mini-environment,
+where it doesn't depend on any dependency, meaning the dependencies of these classes should be faked or mocked,
+so you don't actually trigger or call the functions of dependent, because in unit tests we are just testing the public methods
+and members of the class, without actually contacting the class it depends on.
+
+In order to unit test your application, you need to cover your controllers, services, repositories and similar classes with unit tests,
+suffixed with `.spec.ts` phrase (eg. `example.service.spec.ts`). To run them type:
+```shell
+$ yarn test
+```
+or in container:
+```shell
+$ docker-compose exec api sh -c "yarn test"
+```
 
 ### e2e / API testing
 The idea of e2e/API testing is to test your resources and endpoints against some test data and payloads, and you should aim to cover most crucial scenarios
