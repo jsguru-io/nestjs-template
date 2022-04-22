@@ -9,10 +9,6 @@ export class QueryParamsDTO {
 
   @IsOptional()
   @IsNumber()
-  @Transform((property) => {
-    console.log(property);
-    property.obj.king = { lmao: 'nda' };
-    return +property.value ?? null;
-  })
+  @Transform((property) => +property.value ?? null)
   offset?: number;
 }

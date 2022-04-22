@@ -4,6 +4,7 @@ import {
   IMigrationMeta,
   IMigrator,
   IMigratorOptions,
+  MigrateDownOptions,
 } from '../type';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -59,7 +60,7 @@ export class Migrator implements IMigrator {
     return this.driver.up();
   }
 
-  async down(): Promise<IMigrationMeta[]> {
-    return this.driver.down();
+  async down(options?: MigrateDownOptions): Promise<IMigrationMeta[]> {
+    return this.driver.down(options);
   }
 }

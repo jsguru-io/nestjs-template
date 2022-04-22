@@ -24,6 +24,14 @@ export class MigratorCommand {
   }
 
   @Command({
+    command: 'migrate:reset',
+    describe: 'Reverts database migrations',
+  })
+  async reset(): Promise<void> {
+    await this.migrator.down({ to: <string | 0>0 });
+  }
+
+  @Command({
     command: 'migration:create <migration>',
     describe: 'Create new migration file',
   })

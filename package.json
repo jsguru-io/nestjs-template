@@ -22,6 +22,7 @@
     "command": "npx nestjs-command",
     "db:migrate": "yarn command migrate",
     "db:migrate:down": "yarn command migrate:down",
+    "db:migrate:reset": "yarn command migrate:reset",
     "db:migration:create": "yarn command migration:create"
   },
   "dependencies": {

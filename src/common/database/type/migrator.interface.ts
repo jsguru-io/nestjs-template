@@ -2,8 +2,10 @@ import { QueryInterface } from 'sequelize';
 import { SequelizeStorage } from 'umzug';
 import { LoggerFn } from '../../logger';
 import { IMigrationMeta } from './migration.interface';
+import { MigrateDownOptions as UmzugMigrateDownOptions } from 'umzug/lib/types';
 
 export type MigratorContext = QueryInterface;
+export type MigrateDownOptions = UmzugMigrateDownOptions;
 
 export interface IMigratorOptions {
   migrationsGlob: string;
@@ -20,7 +22,7 @@ export interface ICreateMigrationOptions {
 
 export interface IMigrator {
   up: () => Promise<IMigrationMeta[]>;
-  down: () => Promise<IMigrationMeta[]>;
+  down: (options?: MigrateDownOptions) => Promise<IMigrationMeta[]>;
   create: (options: ICreateMigrationOptions) => Promise<void>;
   getMigrationsPath: () => string;
   setMigrationsPath: (path: string) => void;
