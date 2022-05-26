@@ -8,7 +8,7 @@ export class ExampleService extends BaseCrudService<
   Example,
   ExampleRepository
 > {
-  constructor(protected readonly exampleRepository: ExampleRepository) {
+  constructor(public readonly exampleRepository: ExampleRepository) {
     super(exampleRepository);
   }
 }
