@@ -103,6 +103,62 @@ If you want to revert executed migrations, do it like:
 $ docker-compose exec api sh -c "yarn db:migrate:down"
 ```
 
+### Validation
+Also, we enhanced the format of the thrown validation errors, and instead of getting plain list of 
+errors in string format you will get additional metadata about every validation error, even for the nested objects and arrays.
+So if you send and validate some object like this:
+```json
+{
+  "age": "202",
+  "items": [
+    {
+      "meta": {
+        "author": "",
+        "url": ""
+      }
+    }
+  ]
+}
+```
+
+You should get this as an output:
+```json
+{
+    "statusCode": 400,
+    "message": [
+        {
+            "property": "age",
+            "violations": {
+                "max": "age must not be greater than 100",
+                "isNumber": "age must be a number conforming to the specified constraints"
+            }
+        },
+        {
+          "property": "items.0.title",
+          "violations": {
+            "isString": "title must be a string",
+            "isNotEmpty": "title should not be empty"
+          }
+        },
+        {
+            "property": "items.0.meta.author",
+            "violations": {
+                "isNotEmpty": "author should not be empty"
+            }
+        },
+        {
+            "property": "items.0.meta.url",
+            "violations": {
+                "isString": "url must be a string"
+            }
+        }
+    ],
+    "error": "Bad Request"
+}
+```
+This way you can easily map and target the errors of nested properties, so you can avoid handling
+the errors recursively.
+
 ### Code linting
 We use [prettier](https://prettier.io/) and [eslint](https://eslint.org/) to make our code more readable and unified.
 

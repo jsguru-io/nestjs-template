@@ -1,9 +1,10 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './common/database';
 import { CommandModule } from 'nestjs-command';
 import { ExampleModule } from './example/example.module';
 import { APP_PIPE } from '@nestjs/core';
+import { AppValidationPipe } from './common/validation';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { APP_PIPE } from '@nestjs/core';
   providers: [
     {
       provide: APP_PIPE,
-      useFactory: () => new ValidationPipe({ transform: true }),
+      useFactory: () => new AppValidationPipe({ transform: true }),
     },
   ],
 })
