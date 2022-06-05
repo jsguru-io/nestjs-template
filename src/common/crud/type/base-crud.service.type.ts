@@ -1,4 +1,4 @@
-export type PaginatedSet<T = any> = {
+export class PaginatedSet<T = any> {
   total: number;
   data: T;
-};
+}
