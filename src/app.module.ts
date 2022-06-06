@@ -5,6 +5,7 @@ import { CommandModule } from 'nestjs-command';
 import { ExampleModule } from './example/example.module';
 import { APP_PIPE } from '@nestjs/core';
 import { AppValidationPipe } from './common/validation';
+import { ScaffoldModule } from './common/scaffold';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AppValidationPipe } from './common/validation';
       isGlobal: true,
     }),
     DatabaseModule,
+    ScaffoldModule,
     CommandModule,
     ExampleModule,
   ],
