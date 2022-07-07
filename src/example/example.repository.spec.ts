@@ -96,5 +96,130 @@ describe('ExampleRepository', () => {
     expect(result.count).toBe(5);
   });
 
-  it('ExampleRepository.findPaginated() should return paginated', async () => {});
+  it('ExampleRepository.findPaginated() should return paginated', async () => {
+    const examples: Example[] = modelFactory.createMany(Example, 5);
+
+    jest.spyOn(Example, 'findAndCountAll').mockImplementation(async () => ({
+      count: <GroupedCountResultItem[]>(<unknown>5),
+      rows: examples,
+    }));
+
+    const result: ResultsWithCountSet<Example> = await repository.findPaginated(
+      {
+        offset: 10,
+        limit: 20,
+      },
+    );
+
+    expect(result).toHaveProperty('rows');
+    expect(result).toHaveProperty('count');
+    expect(result.rows).toBeInstanceOf(Array);
+    expect(result.rows).toHaveLength(5);
+    expect(result.rows[0]).toBeInstanceOf(Example);
+    expect(result.count).toBe(5);
+  });
+
+  it('ExampleRepository.findOneById() should return one by id', async () => {
+    const example: Example = modelFactory.create<Example>(Example);
+
+    jest.spyOn(Example, 'findByPk').mockImplementation(async () => example);
+
+    const result: Example = await repository.findOneById('testId');
+
+    expect(result).toBeInstanceOf(Example);
+  });
+
+  it('ExampleRepository.findOne() should return one by filters', async () => {
+    const example: Example = modelFactory.create<Example>(Example);
+
+    jest.spyOn(Example, 'findOne').mockImplementation(async () => example);
+
+    const result: Example = await repository.findOne({
+      where: {
+        age: 20,
+        name: 'Test Example',
+      },
+    });
+
+    expect(result).toBeInstanceOf(Example);
+  });
+
+  it('ExampleRepository.create() should return one', async () => {
+    const example: Example = modelFactory.create<Example>(Example);
+
+    jest.spyOn(Example, 'create').mockImplementation(async () => example);
+
+    const result: Example = await repository.create({
+      age: 20,
+      name: 'TestExample',
+    });
+
+    expect(result).toBeInstanceOf(Example);
+  });
+
+  it('ExampleRepository.createMany() should return many', async () => {
+    const examples: Example[] = modelFactory.createMany<Example>(Example, 10);
+
+    jest.spyOn(Example, 'bulkCreate').mockImplementation(async () => examples);
+
+    const result: Example[] = await repository.createMany([
+      {
+        age: 20,
+        name: 'TestExample',
+      },
+      {
+        age: 29,
+        name: 'TestExample2',
+      },
+    ]);
+
+    expect(result).toBeInstanceOf(Array);
+    expect(result[0]).toBeInstanceOf(Example);
+  });
+
+  it('ExampleRepository.update() should return one', async () => {
+    const example: Example = modelFactory.create<Example>(Example);
+
+    jest.spyOn(Example, 'update').mockImplementation(async () => undefined);
+
+    jest
+      .spyOn(repository, 'findOneById')
+      .mockImplementation(async () => example);
+
+    const result: Example = await repository.update('testId', {
+      name: 'TestName',
+      age: 27,
+    });
+
+    expect(result).toBeInstanceOf(Example);
+  });
+
+  it('ExampleRepository.updateMany() should return undefined', async () => {
+    jest.spyOn(Example, 'update').mockImplementation(async () => undefined);
+
+    const result: void = await repository.updateMany(
+      {
+        where: {
+          age: 26,
+          name: 'TestName',
+        },
+      },
+      {
+        name: 'TestNamev2',
+        age: 39,
+      },
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it('ExampleRepository.remove() should return undefined', async () => {
+    jest.spyOn(Example, 'destroy').mockImplementation(async () => undefined);
+
+    const result: void = await repository.remove('testId');
+    const resultWithIds: void = await repository.remove(['testId', 'testId2']);
+
+    expect(result).toBeUndefined();
+    expect(resultWithIds).toBeUndefined();
+  });
 });
