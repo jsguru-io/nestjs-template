@@ -1,4 +1,10 @@
-import { Column, DataType, Default, Model, Table } from 'sequelize-typescript';
+import {
+  Column,
+  DataType,
+  Default,
+  Model,
+  Table,
+} from '@jsgurucompany/jsg-nestjs-common';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Table({

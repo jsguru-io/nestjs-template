@@ -1,18 +1,36 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './common/database';
+import { BadRequestException, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DatabaseModule } from '@jsgurucompany/jsg-nestjs-common';
 import { CommandModule } from 'nestjs-command';
 import { ExampleModule } from './example/example.module';
 import { APP_PIPE } from '@nestjs/core';
-import { AppValidationPipe } from './common/validation';
-import { ScaffoldModule } from './common/scaffold';
+import { AppValidationPipe } from '@jsgurucompany/jsg-nestjs-common';
+import { ScaffoldModule } from '@jsgurucompany/jsg-nestjs-common';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    DatabaseModule,
+    DatabaseModule.registerAsync({
+      useFactory: (configService: ConfigService) => {
+        return {
+          connection: {
+            host: configService.get('DB_HOST'),
+            port: configService.get('DB_PORT'),
+            username: configService.get('DB_USER'),
+            password: configService.get('DB_PASSWORD'),
+            database: configService.get('DB_NAME'),
+            models: [`${__dirname}/**/*.model.{ts,js}`],
+          },
+          migrator: {
+            path: `${__dirname}/migration`,
+            glob: `**/migration/*.migration.ts`,
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
     ScaffoldModule,
     CommandModule,
     ExampleModule,
@@ -20,7 +38,10 @@ import { ScaffoldModule } from './common/scaffold';
   providers: [
     {
       provide: APP_PIPE,
-      useFactory: () => new AppValidationPipe({ transform: true }),
+      useFactory: () =>
+        new AppValidationPipe({
+          transform: true,
+        }),
     },
   ],
 })

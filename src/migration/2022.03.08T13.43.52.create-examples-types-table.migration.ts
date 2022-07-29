@@ -1,8 +1,7 @@
 import sequelize, { DataTypes } from 'sequelize';
-import { IMigratorOptions } from '../type';
 import { v4 as uuidv4 } from 'uuid';
 
-export const up = async ({ context }: IMigratorOptions): Promise<void> => {
+export const up = async ({ context }): Promise<void> => {
   await context.createTable('examples_types', {
     id: {
       type: DataTypes.UUID,
@@ -37,6 +36,6 @@ export const up = async ({ context }: IMigratorOptions): Promise<void> => {
   );
 };
 
-export const down = async ({ context }: IMigratorOptions): Promise<void> => {
+export const down = async ({ context }): Promise<void> => {
   await context.dropTable('examples_types');
 };

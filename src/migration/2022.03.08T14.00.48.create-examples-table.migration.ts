@@ -1,7 +1,6 @@
 import sequelize, { DataTypes } from 'sequelize';
-import { IMigratorOptions } from '../type';
 
-export const up = async ({ context }: IMigratorOptions): Promise<void> => {
+export const up = async ({ context }): Promise<void> => {
   await context.createTable('examples', {
     id: {
       type: DataTypes.UUID,
@@ -13,14 +12,28 @@ export const up = async ({ context }: IMigratorOptions): Promise<void> => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    foreignId: {
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
+    exampleTypeId: {
       type: DataTypes.UUID,
       references: {
-        model: 'examples',
+        model: 'examples_types',
         key: 'id',
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
+      allowNull: true,
+    },
+    completedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,6 +48,6 @@ export const up = async ({ context }: IMigratorOptions): Promise<void> => {
   });
 };
 
-export const down = async ({ context }: IMigratorOptions): Promise<void> => {
+export const down = async ({ context }): Promise<void> => {
   await context.dropTable('examples');
 };

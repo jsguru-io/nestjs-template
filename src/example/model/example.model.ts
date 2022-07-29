@@ -6,7 +6,7 @@ import {
   ForeignKey,
   Model,
   Table,
-} from 'sequelize-typescript';
+} from '@jsgurucompany/jsg-nestjs-common';
 import { ExampleType } from './example-type.model';
 import { ApiProperty } from '@nestjs/swagger';
 

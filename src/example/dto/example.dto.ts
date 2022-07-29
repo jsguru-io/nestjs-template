@@ -9,7 +9,7 @@ import {
   Max,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { PaginatedSet } from '../../common/crud';
+import { PaginatedSet } from '@jsgurucompany/jsg-nestjs-common';
 import { Example } from '../model/example.model';
 
 export class ExampleDTO {

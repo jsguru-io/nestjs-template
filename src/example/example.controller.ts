@@ -9,8 +9,8 @@ import {
   Query,
   HttpCode,
 } from '@nestjs/common';
-import { PaginatedSet } from '../common/crud';
-import { QueryParamsDTO } from '../common/http/query-params.dto';
+import { PaginatedSet } from '@jsgurucompany/jsg-nestjs-common';
+import { QueryParamsDTO } from '@jsgurucompany/jsg-nestjs-common';
 import { ExampleDTO, PaginatedExampleSet } from './dto/example.dto';
 import { Example } from './model/example.model';
 import { ExampleService } from './example.service';
