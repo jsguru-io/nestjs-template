@@ -593,10 +593,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@jsgurucompany/jsg-nestjs-common@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@jsgurucompany/jsg-nestjs-common/-/jsg-nestjs-common-1.1.0.tgz#00f547ac8660fa5b75757333059f23fe8bf52ff9"
-  integrity sha512-6wA7ljUM3mS7bOG6dNDmYFfxnWli8TvkEzUDac9Rm4vb6QtfMST+Gyc4BwwuwqdL9t3jz7+Fbs+CsI5nK+c5Mg==
+"@jsgurucompany/jsg-nestjs-common@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@jsgurucompany/jsg-nestjs-common/-/jsg-nestjs-common-1.1.1.tgz#155988b90876934dc3befdf9afb2cea52f608ede"
+  integrity sha512-gEWaM990/aXXSepjOYAzUjObMvpzo5EivI911tZS76cPtjoTna+9O3WvJ78OGa5a2OvTqiGHnjBfE9WmVobWeg==
   dependencies:
     handlebars "^4.7.7"
     lodash "^4.17.21"

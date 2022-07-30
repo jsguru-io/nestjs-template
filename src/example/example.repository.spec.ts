@@ -1,11 +1,15 @@
 import { ExampleRepository } from './example.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Example } from './model/example.model';
-import { ModelFactory } from '../common/database/factory/model.factory';
-import { DatabaseModule, MODEL_FACTORY_TOKEN } from '../common/database';
+import { ModelFactory } from '@jsgurucompany/jsg-nestjs-common';
+import {
+  DatabaseModule,
+  MODEL_FACTORY_TOKEN,
+} from '@jsgurucompany/jsg-nestjs-common';
 import { Op } from 'sequelize';
 import { GroupedCountResultItem } from 'sequelize/types/model';
-import { ResultsWithCountSet } from '../common/crud';
+import { ResultsWithCountSet } from '@jsgurucompany/jsg-nestjs-common';
+import { testRegisterOptions } from '../common';
 
 describe('ExampleRepository', () => {
   let repository: ExampleRepository;
@@ -13,7 +17,7 @@ describe('ExampleRepository', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [DatabaseModule],
+      imports: [DatabaseModule.register(testRegisterOptions)],
       providers: [ExampleRepository],
     }).compile();
 

@@ -2,9 +2,16 @@ import { ExampleService } from './example.service';
 import { Test } from '@nestjs/testing';
 import { ExampleRepository } from './example.repository';
 import { Example } from './model/example.model';
-import { DatabaseModule, MODEL_FACTORY_TOKEN } from '../common/database';
-import { ModelFactory } from '../common/database/factory/model.factory';
-import { ModelCreationAttributes, PaginatedSet } from '../common/crud';
+import {
+  DatabaseModule,
+  MODEL_FACTORY_TOKEN,
+} from '@jsgurucompany/jsg-nestjs-common';
+import { ModelFactory } from '@jsgurucompany/jsg-nestjs-common';
+import {
+  ModelCreationAttributes,
+  PaginatedSet,
+} from '@jsgurucompany/jsg-nestjs-common';
+import { testRegisterOptions } from '../common';
 
 describe('ExampleService', () => {
   let service: ExampleService;
@@ -13,7 +20,7 @@ describe('ExampleService', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      imports: [DatabaseModule],
+      imports: [DatabaseModule.register(testRegisterOptions)],
       providers: [ExampleService, ExampleRepository],
     }).compile();
 
