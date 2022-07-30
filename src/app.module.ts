@@ -4,8 +4,9 @@ import { DatabaseModule } from '@jsgurucompany/jsg-nestjs-common';
 import { CommandModule } from 'nestjs-command';
 import { ExampleModule } from './example/example.module';
 import { APP_PIPE } from '@nestjs/core';
-import { AppValidationPipe } from '@jsgurucompany/jsg-nestjs-common';
 import { ScaffoldModule } from '@jsgurucompany/jsg-nestjs-common';
+import { AppValidationPipe } from '@jsgurucompany/jsg-nestjs-common';
+import { AppValidationError } from '@jsgurucompany/jsg-nestjs-common';
 
 @Module({
   imports: [
@@ -41,6 +42,9 @@ import { ScaffoldModule } from '@jsgurucompany/jsg-nestjs-common';
       useFactory: () =>
         new AppValidationPipe({
           transform: true,
+          exceptionFactory: (errors: AppValidationError[]) => {
+            throw new BadRequestException(errors);
+          },
         }),
     },
   ],
